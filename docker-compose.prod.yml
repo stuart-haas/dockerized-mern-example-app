@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+  server:
+  client:
+
 services:
   nginx:
     container_name: nginx
@@ -10,13 +14,18 @@ services:
     volumes:
       - ./client/build:/var/www/public
     ports:
-      - '8080:8080'
+      - '80:80'
+    networks:
+      - client
+      - server
   
   client:
     stdin_open: false
     build: 
       context: ./client
       target: prod
+    networks:
+      - client
     environment:
       CHOKIDAR_USEPOLLING: 'false'
 
@@ -25,5 +34,7 @@ services:
     build: 
       context: ./server
       target: prod
+    networks:
+      - server
     environment:
       CHOKIDAR_USEPOLLING: 'false'
