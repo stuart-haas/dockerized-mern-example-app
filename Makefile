@@ -1,5 +1,5 @@
 start-dev:
-	docker-compose up --build
+	docker-compose up --build --remove-orphans
 
 build-dev:
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build --remove-orphans
